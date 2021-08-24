@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ZSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HR_DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="COD_EMPRESA" />
+            <PropertyRef Name="COD_DEPARTAMENTO" />
+          </Key>
+          <Property Name="COD_EMPRESA" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="COD_DEPARTAMENTO" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="HR_PAGO">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="int" Nullable="false" />
+          <Property Name="COD_EMPRESA" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="COD_RUBRO_PAGO" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="RESULTADO" Type="numeric" Precision="18" Scale="6" />
+          <Property Name="FECHA_PAGO " Type="date" />
+          <Property Name="COD_DEPARTAMENTO" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="COD_EMPRESA_d" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HR_DEPARTAMENTO">
+          <End Role="HR_DEPARTAMENTO" Type="Self.HR_DEPARTAMENTO" Multiplicity="1" />
+          <End Role="HR_PAGO" Type="Self.HR_PAGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HR_DEPARTAMENTO">
+              <PropertyRef Name="COD_EMPRESA" />
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Principal>
+            <Dependent Role="HR_PAGO">
+              <PropertyRef Name="COD_EMPRESA_d" />
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ProcedureZS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ZSDBModelStoreContainer">
+          <EntitySet Name="HR_DEPARTAMENTO" EntityType="Self.HR_DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HR_PAGO" EntityType="Self.HR_PAGO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HR_DEPARTAMENTO" Association="Self.FK_HR_DEPARTAMENTO">
+            <End Role="HR_DEPARTAMENTO" EntitySet="HR_DEPARTAMENTO" />
+            <End Role="HR_PAGO" EntitySet="HR_PAGO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HR_DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="COD_EMPRESA" />
+            <PropertyRef Name="COD_DEPARTAMENTO" />
+          </Key>
+          <Property Name="COD_EMPRESA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COD_DEPARTAMENTO" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HR_PAGO" Relationship="Self.FK_HR_DEPARTAMENTO" FromRole="HR_DEPARTAMENTO" ToRole="HR_PAGO" />
+        </EntityType>
+        <EntityType Name="HR_PAGO">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="COD_EMPRESA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COD_RUBRO_PAGO" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RESULTADO" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="FECHA_PAGO_" Type="DateTime" Precision="0" />
+          <Property Name="COD_DEPARTAMENTO" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COD_EMPRESA_d" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HR_DEPARTAMENTO" Relationship="Self.FK_HR_DEPARTAMENTO" FromRole="HR_PAGO" ToRole="HR_DEPARTAMENTO" />
+        </EntityType>
+        <Association Name="FK_HR_DEPARTAMENTO">
+          <End Role="HR_DEPARTAMENTO" Type="Self.HR_DEPARTAMENTO" Multiplicity="1" />
+          <End Role="HR_PAGO" Type="Self.HR_PAGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HR_DEPARTAMENTO">
+              <PropertyRef Name="COD_EMPRESA" />
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Principal>
+            <Dependent Role="HR_PAGO">
+              <PropertyRef Name="COD_EMPRESA_d" />
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZSDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HR_DEPARTAMENTO" EntityType="Self.HR_DEPARTAMENTO" />
+          <EntitySet Name="HR_PAGO" EntityType="Self.HR_PAGO" />
+          <AssociationSet Name="FK_HR_DEPARTAMENTO" Association="Self.FK_HR_DEPARTAMENTO">
+            <End Role="HR_DEPARTAMENTO" EntitySet="HR_DEPARTAMENTO" />
+            <End Role="HR_PAGO" EntitySet="HR_PAGO" />
+          </AssociationSet>
+          <FunctionImport Name="ProcedureZS" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZSDBModelStoreContainer" CdmEntityContainer="ZSDBEntities">
+          <EntitySetMapping Name="HR_DEPARTAMENTO">
+            <EntityTypeMapping TypeName="ZSDBModel.HR_DEPARTAMENTO">
+              <MappingFragment StoreEntitySet="HR_DEPARTAMENTO">
+                <ScalarProperty Name="COD_EMPRESA" ColumnName="COD_EMPRESA" />
+                <ScalarProperty Name="COD_DEPARTAMENTO" ColumnName="COD_DEPARTAMENTO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HR_PAGO">
+            <EntityTypeMapping TypeName="ZSDBModel.HR_PAGO">
+              <MappingFragment StoreEntitySet="HR_PAGO">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="COD_EMPRESA" ColumnName="COD_EMPRESA" />
+                <ScalarProperty Name="COD_RUBRO_PAGO" ColumnName="COD_RUBRO_PAGO" />
+                <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
+                <ScalarProperty Name="FECHA_PAGO_" ColumnName="FECHA_PAGO " />
+                <ScalarProperty Name="COD_DEPARTAMENTO" ColumnName="COD_DEPARTAMENTO" />
+                <ScalarProperty Name="COD_EMPRESA_d" ColumnName="COD_EMPRESA_d" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ProcedureZS" FunctionName="ZSDBModel.Store.ProcedureZS" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
